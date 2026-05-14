@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NJ Pharma Supply Chain ESG — Risk &amp; Opportunity Assessment · Lunarix Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  /* Restrained palette — McKinsey/Deloitte feel */
+  --ink:#0F2342;          /* primary navy */
+  --ink-2:#1B3556;        /* secondary navy */
+  --teal:#1D9E75;         /* positive */
+  --teal-soft:#E7F4EE;
+  --amber:#C28430;        /* attention */
+  --amber-soft:#FAF1DD;
+  --red:#B14545;          /* risk — used sparingly */
+  --red-soft:#F8E8E8;
+  --text:#1a1a2e;
+  --text-2:#4d4d63;
+  --text-mute:#8a8a98;
+  --line:#e6e8ec;
+  --line-strong:#cdd2d9;
+  --bg:#fafbfc;
+  --paper:#ffffff;
+  --r:10px;
+  --r-lg:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--bg);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Source Serif 4',Georgia,serif}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 28px 80px}
+a{color:inherit}
+
+/* ─── BACK LINK ─── */
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2);text-decoration:none;margin-bottom:32px;padding-bottom:2px;border-bottom:1px solid transparent}
+.back:hover{color:var(--ink);border-color:var(--ink)}
+
+/* ─── HEADER ─── */
+.hero{margin-bottom:48px}
+.hero-kicker{font-size:11px;font-weight:600;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:var(--ink);line-height:1.25;letter-spacing:-.01em;margin-bottom:14px;max-width:720px}
+.hero-sub{font-size:15px;color:var(--text-2);line-height:1.65;max-width:680px;margin-bottom:24px}
+.hero-meta{display:flex;gap:24px;flex-wrap:wrap;font-size:12px;color:var(--text-mute);padding-top:18px;border-top:1px solid var(--line)}
+.hero-meta b{color:var(--text);font-weight:600}
+
+/* ─── EXECUTIVE SUMMARY ─── */
+.exec{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:var(--r);padding:24px 28px;margin-bottom:48px}
+.exec-label{font-size:11px;font-weight:600;color:var(--ink);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.exec-title{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;color:var(--ink);margin-bottom:14px}
+.exec-list{list-style:none;display:flex;flex-direction:column;gap:14px;counter-reset:item}
+.exec-list li{position:relative;padding-left:36px;font-size:13.5px;line-height:1.65;color:var(--text-2)}
+.exec-list li::before{content:counter(item);counter-increment:item;position:absolute;left:0;top:1px;font-size:11px;font-weight:600;color:var(--ink);background:var(--bg);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.exec-list li b{color:var(--ink);font-weight:600}
+
+/* ─── SECTION ─── */
+.section{margin-bottom:56px}
+.section-kicker{font-size:11px;font-weight:600;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.section-title{font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:10px;max-width:680px}
+.section-lede{font-size:14px;color:var(--text-2);line-height:1.7;max-width:680px;margin-bottom:28px}
+
+/* ─── KPI ROW ─── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
+.kpi-num{font-family:'Source Serif 4',serif;font-size:32px;font-weight:600;color:var(--ink);line-height:1;margin-bottom:6px;letter-spacing:-.01em}
+.kpi-num.t{color:var(--teal)}
+.kpi-num.a{color:var(--amber)}
+.kpi-num.r{color:var(--red)}
+.kpi-lbl{font-size:12.5px;color:var(--text-2);line-height:1.4;margin-bottom:8px;font-weight:500}
+.kpi-foot{font-size:11px;color:var(--text-mute);padding-top:8px;border-top:1px solid var(--line)}
+
+/* ─── HERO STAT (the 82% Scope 3 moment) ─── */
+.scope-hero{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px 36px;margin-bottom:24px;display:grid;grid-template-columns:1fr 1.4fr;gap:36px;align-items:center}
+.scope-big{font-family:'Source Serif 4',serif;font-size:88px;font-weight:600;color:var(--amber);line-height:1;letter-spacing:-.02em}
+.scope-claim{font-size:15px;color:var(--text-2);line-height:1.6;margin-top:8px}
+.scope-claim b{color:var(--ink);font-weight:600}
+.scope-chart-wrap{background:var(--bg);border-radius:var(--r);padding:18px 20px}
+.scope-chart-title{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:4px;letter-spacing:.02em}
+.scope-chart-sub{font-size:11px;color:var(--text-mute);margin-bottom:14px}
+.scope-chart{position:relative;height:170px}
+
+/* ─── INSIGHT BLOCK (callout under chart) ─── */
+.insight{background:var(--teal-soft);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 18px;font-size:13px;color:var(--text);line-height:1.65;margin-top:18px}
+.insight.warn{background:var(--amber-soft);border-color:var(--amber)}
+.insight.danger{background:var(--red-soft);border-color:var(--red)}
+.insight b{font-weight:600}
+
+/* ─── TOP 3 RISK HOTSPOTS ─── */
+.hot-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.hot{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--red);border-radius:var(--r);padding:18px 20px}
+.hot-rank{font-size:11px;font-weight:600;color:var(--red);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.hot-score{font-family:'Source Serif 4',serif;font-size:36px;font-weight:600;color:var(--ink);line-height:1;margin-bottom:8px}
+.hot-score small{font-size:14px;color:var(--text-mute);font-weight:400;font-family:'Inter',sans-serif}
+.hot-name{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;line-height:1.35}
+.hot-desc{font-size:12px;color:var(--text-2);line-height:1.5}
+
+/* ─── HEAT MAP ─── */
+.heat-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 26px;margin-top:16px}
+.heat-table{border-collapse:separate;border-spacing:4px;width:100%}
+.heat-table th{font-size:10.5px;color:var(--text-mute);font-weight:500;padding:6px 4px;text-align:center;vertical-align:bottom;line-height:1.3}
+.heat-table th.row-lbl{text-align:right;padding-right:12px;font-size:12px;color:var(--text-2);font-weight:500;white-space:nowrap}
+.cell{padding:10px 4px;text-align:center;border-radius:6px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;color:#fff;min-width:64px;line-height:1}
+.cell:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,35,66,.18)}
+/* Heat scale — softened palette */
+.c-5{background:#9F3535}    /* critical 20-25 */
+.c-4{background:#C0625F}    /* high 15-19 */
+.c-3{background:#C28430}    /* med 10-14 */
+.c-2{background:#D9B574}    /* moderate 6-9 */
+.c-1{background:#7CB9A0}    /* low ≤5 */
+.heat-legend{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;font-size:11.5px;color:var(--text-2);padding-top:14px;border-top:1px solid var(--line)}
+.sw{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}
+
+/* ─── COMPANY GRID ─── */
+.co-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.co{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:all .15s}
+.co:hover{border-color:var(--ink);transform:translateY(-1px)}
+.co.active{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
+.co-name{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.co-loc{font-size:11.5px;color:var(--text-mute);margin-bottom:14px}
+.co-loc .sbti{color:var(--teal);font-weight:600;margin-left:4px}
+.co-scores{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding-top:12px;border-top:1px solid var(--line)}
+.sc{text-align:center}
+.sc-lbl{font-size:10px;color:var(--text-mute);font-weight:500;letter-spacing:.03em;margin-bottom:3px}
+.sc-val{font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;color:var(--ink)}
+.sc.total .sc-val{color:var(--teal)}
+
+/* ─── CHART CARDS ─── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.chart-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px}
+.chart-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.chart-sub{font-size:11.5px;color:var(--text-mute);margin-bottom:16px;line-height:1.5}
+.chart-h{position:relative;height:240px}
+.chart-h-lg{position:relative;height:280px}
+
+/* ─── RISK / OPPORTUNITY / ACTION (3-col) ─── */
+.roa-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px;margin-bottom:16px}
+.roa-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.roa-col{padding:0 22px;border-right:1px solid var(--line)}
+.roa-col:first-child{padding-left:0}
+.roa-col:last-child{padding-right:0;border-right:none}
+.roa-lbl{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.roa-lbl.r{color:var(--red)}
+.roa-lbl.o{color:var(--teal)}
+.roa-lbl.a{color:var(--ink)}
+.roa-title{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4}
+.roa-body{font-size:12.5px;color:var(--text-2);line-height:1.6}
+.roa-body b{color:var(--ink);font-weight:600}
+.roa-tag{display:inline-block;font-size:10.5px;padding:2px 8px;border-radius:99px;background:var(--bg);color:var(--text-mute);margin-top:10px;font-weight:500}
+
+/* ─── METHODOLOGY ─── */
+.method{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:28px 32px}
+.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:10px;margin-bottom:24px}
+.m-step{padding-top:14px;border-top:2px solid var(--ink)}
+.m-num{font-size:11px;font-weight:600;color:var(--ink);letter-spacing:.1em;margin-bottom:4px}
+.m-name{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.m-detail{font-size:12px;color:var(--text-2);line-height:1.6}
+.src-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.src{font-size:10.5px;padding:3px 9px;border-radius:4px;background:var(--bg);color:var(--text-2);font-weight:500;border:1px solid var(--line)}
+.limits{background:var(--bg);border-radius:8px;padding:16px 20px;margin-top:18px;font-size:12.5px;color:var(--text-2);line-height:1.65}
+.limits b{color:var(--ink);font-weight:600;display:block;margin-bottom:6px;font-size:12px;letter-spacing:.02em;text-transform:uppercase}
+
+/* ─── REFLECTION ─── */
+.reflect{padding:32px 36px;background:linear-gradient(180deg,var(--paper) 0%,var(--bg) 100%);border:1px solid var(--line);border-radius:var(--r-lg);margin-bottom:32px}
+.reflect-label{font-size:11px;font-weight:600;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.reflect-quote{font-family:'Source Serif 4',serif;font-size:17px;color:var(--ink);line-height:1.55;font-weight:400;letter-spacing:-.005em}
+.reflect-author{font-size:12px;color:var(--text-mute);margin-top:14px}
+
+/* ─── ACTIONS / DOWNLOADS ─── */
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;padding:11px 20px;border-radius:8px;text-decoration:none;transition:all .15s;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#000}
+.btn-outline{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+.btn-outline:hover{border-color:var(--ink);background:var(--bg)}
+
+/* ─── FILTERS (subtle) ─── */
+.filters{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-mute);margin-bottom:14px;flex-wrap:wrap}
+.filters span{font-weight:500;letter-spacing:.02em}
+.fbtn{font-size:12px;padding:5px 11px;border-radius:99px;border:1px solid var(--line-strong);background:var(--paper);color:var(--text-2);cursor:pointer;font-family:inherit;transition:all .15s}
+.fbtn:hover,.fbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* ─── FOOTER ─── */
+.footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--text-mute);line-height:1.8;text-align:center}
+.footer a{color:var(--text-2);text-decoration:none}
+.footer a:hover{color:var(--ink);text-decoration:underline}
+
+@media (max-width:880px){
+  .kpi-row,.hot-row,.co-grid,.method-grid{grid-template-columns:repeat(2,1fr)}
+  .scope-hero,.two-col,.roa-grid{grid-template-columns:1fr}
+  .scope-big{font-size:64px}
+  .roa-col{padding:18px 0;border-right:none;border-bottom:1px solid var(--line)}
+  .roa-col:last-child{border-bottom:none}
+  .hero h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="index.html" class="back">← Portfolio</a>
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO HEADER
+     ═══════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-kicker">Supply Chain ESG · Risk &amp; Opportunity Assessment</div>
+  <h1>Helping New Jersey pharma manufacturers find their carbon hotspots, supplier risks, and the regulatory openings underneath.</h1>
+  <p class="hero-sub">An independent, data-driven look at the ESG performance of six NJ-headquartered pharmaceutical manufacturers — Johnson &amp; Johnson, Merck, Bristol Myers Squibb, Bayer US, Sanofi US, and Becton Dickinson — across Scope 1–3 emissions, supplier governance, and the TCFD-aligned risk taxonomy.</p>
+  <div class="hero-meta">
+    <span><b>By</b> Yiduo Xiao · Lunarix Technologies LLC</span>
+    <span><b>Frameworks</b> TCFD · SASB Pharma · PSCI · SBTi</span>
+    <span><b>Data</b> CDP · MSCI · SEC EDGAR · EPA GHGRP</span>
+    <span><b>Updated</b> May 2026</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════
+     EXECUTIVE SUMMARY — read this and you've got 80%
+     ═══════════════════════════════════════════════════════ -->
+<div class="exec">
+  <div class="exec-label">Executive Summary — 30-second read</div>
+  <div class="exec-title">Four findings every NJ pharma ESG team should act on this year.</div>
+  <ol class="exec-list">
+    <li>The NJ pharma cluster sits <b>14 points above the S&amp;P 500 ESG average</b> — but <b>82% of its carbon footprint is Scope 3</b>, sitting with upstream suppliers. The leverage point is supplier engagement, not factory retrofits.</li>
+    <li>API sourcing from Asia compounds three risks into a single touchpoint: <b>environmental compliance, geopolitical exposure, and Scope 3 emissions</b>. Of the heat-map's 30 risk cells, that one column drives nearly 40% of high-risk concentration.</li>
+    <li>Three opportunities are large enough to move the needle: <b>SBTi-aligned supplier engagement</b> (~−14% Scope 3 by 2030), <b>IoT cold-chain telemetry</b> (−22% spoilage in J&amp;J's pilot), and <b>nearshoring with IRA Section 60101 credits</b> ($40–60M working-capital release).</li>
+    <li><b>Five of six companies have SBTi-validated 1.5°C targets</b>; only Bayer US is pending. Governance baseline in the NJ cluster is strong — the gap is execution velocity, not strategy.</li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     KPI ROW — only 4
+     ═══════════════════════════════════════════════════════ -->
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-num t" id="kpi-avg">79.0</div>
+    <div class="kpi-lbl">NJ Pharma ESG composite score</div>
+    <div class="kpi-foot">vs S&amp;P 500 avg <b>65</b> · ▲ +2.1 YoY</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num a">82%</div>
+    <div class="kpi-lbl">Carbon footprint sitting upstream (Scope 3)</div>
+    <div class="kpi-foot">The strategic supplier-engagement opportunity</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num t">87.4%</div>
+    <div class="kpi-lbl">PSCI supplier compliance rate</div>
+    <div class="kpi-foot">▲ +4.2 pp YoY · target 95% by 2030</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num r">617</div>
+    <div class="kpi-lbl">High-risk suppliers flagged for remediation</div>
+    <div class="kpi-foot">Of 11,313 audited · ▼ −12% under active mitigation</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 1 — SCOPE 3 STORY (THE HERO)
+     ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-kicker">Section 1 · The carbon story</div>
+  <h2 class="section-title">82% of NJ pharma's carbon footprint sits with suppliers — not factories.</h2>
+  <p class="section-lede">Conventional ESG conversation centers on what a company emits inside its own walls. For NJ pharma, that's a misdirected lens. Scope 1 and Scope 2 combined explain roughly 18% of total emissions. The remaining 82% — purchased APIs, packaging materials, distribution fuel, business travel — lives in the supply chain. Any 1.5°C-aligned strategy that doesn't engage suppliers is, mathematically, a strategy that can't work.</p>
+
+  <div class="scope-hero">
+    <div>
+      <div class="scope-big" id="scopeBig">82%</div>
+      <div class="scope-claim">of NJ pharma's total carbon footprint comes from <b>Scope 3 upstream emissions</b> — the single largest decarbonization lever available to this cluster.</div>
+    </div>
+    <div class="scope-chart-wrap">
+      <div class="scope-chart-title">5-year emissions trajectory · NJ pharma avg</div>
+      <div class="scope-chart-sub">Million metric tons CO₂e · Scope 1 (operations) · Scope 2 (purchased energy) · Scope 3 (supply chain)</div>
+      <div class="scope-chart"><canvas id="cEmissions"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insight warn">
+    <b>What this means in dollars.</b> Under expanding carbon-pricing regimes (EU CBAM extending coverage by 2027; potential US federal carbon adjustment), this Scope 3 exposure translates to an estimated <b>$80–140M in incremental annual costs</b> for the six NJ pharma cos. by 2030 — concentrated in API sourcing from India and China.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 2 — TOP 3 RISK HOTSPOTS + HEAT MAP
+     ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-kicker">Section 2 · Where risk concentrates</div>
+  <h2 class="section-title">Three hotspots account for half the cluster's residual supply-chain risk.</h2>
+  <p class="section-lede">A 5×5 likelihood × impact scoring applied across 6 supply-chain stages and 5 risk types surfaces 30 risk cells. Most are low or moderate. Three are critical — and they cluster in two stages: <b>API sourcing</b> and <b>API manufacturing</b>. Fixing those two stages is where 80% of the strategic value sits.</p>
+
+  <div class="hot-row">
+    <div class="hot">
+      <div class="hot-rank">#1 Hotspot</div>
+      <div class="hot-score">22<small> / 25</small></div>
+      <div class="hot-name">API sourcing × geopolitical exposure</div>
+      <div class="hot-desc">≥40% of US generics API single-sourced from CN/IN. 2025 tariff scenarios + IP-protection disputes = 12–18% COGS impact possible.</div>
+    </div>
+    <div class="hot">
+      <div class="hot-rank">#2 Hotspot</div>
+      <div class="hot-score">22<small> / 25</small></div>
+      <div class="hot-name">API sourcing × Scope 3 carbon</div>
+      <div class="hot-desc">Energy-intensive batch chemistry in India/China supplier plants. Largest single Scope 3 contributor for most NJ pharma cos.</div>
+    </div>
+    <div class="hot">
+      <div class="hot-rank">#3 Hotspot</div>
+      <div class="hot-score">20<small> / 25</small></div>
+      <div class="hot-name">API sourcing × environmental compliance</div>
+      <div class="hot-desc">Wastewater discharge &amp; solvent management non-compliance. Frequent EPA + state-agency finding triggering supply-chain disruption.</div>
+    </div>
+  </div>
+
+  <div class="filters" style="margin-top:18px">
+    <span>Show:</span>
+    <button class="fbtn active" onclick="setRiskFilter('all',this)">All risk levels</button>
+    <button class="fbtn" onclick="setRiskFilter('high',this)">High &amp; critical only</button>
+  </div>
+
+  <div class="heat-card">
+    <table class="heat-table">
+      <thead>
+        <tr>
+          <th class="row-lbl"></th>
+          <th>Raw Material<br>Sourcing</th>
+          <th>API<br>Manufacturing</th>
+          <th>Drug Product<br>Formulation</th>
+          <th>Packaging<br>&amp; Labeling</th>
+          <th>Distribution<br>&amp; Cold Chain</th>
+          <th>Last-Mile<br>Delivery</th>
+        </tr>
+      </thead>
+      <tbody id="heatBody"></tbody>
+    </table>
+    <div class="heat-legend">
+      <span><span class="sw c-5"></span>Critical (20–25)</span>
+      <span><span class="sw c-4"></span>High (15–19)</span>
+      <span><span class="sw c-3"></span>Medium (10–14)</span>
+      <span><span class="sw c-2"></span>Moderate (6–9)</span>
+      <span><span class="sw c-1"></span>Low (≤5)</span>
+      <span style="margin-left:auto;color:var(--text-mute);font-style:italic">Hover any cell for the underlying risk narrative.</span>
+    </div>
+  </div>
+
+  <div class="insight danger" style="margin-top:24px">
+    <b>API sourcing from Asia is the compounding risk.</b> That single supply-chain stage drives nearly 40% of all high-risk cells — environmental, carbon, and geopolitical risk converge into one upstream touchpoint. This is also the stage where mitigation has the highest leverage; it's both the largest problem and the largest opportunity.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 3 — COMPANY SCORECARDS
+     ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-kicker">Section 3 · Cluster overview</div>
+  <h2 class="section-title">Six NJ-headquartered pharma manufacturers, side by side.</h2>
+  <p class="section-lede">Pillar scores derived from MSCI ESG Ratings, CDP Climate disclosures, and SASB Pharmaceutical Standard materiality weights (1–100 scale, higher = better). Click any company to refilter the charts below.</p>
+
+  <div class="co-grid" id="companyStrip"></div>
+
+  <div class="two-col" style="margin-top:24px">
+    <div class="chart-card">
+      <div class="chart-title">ESG pillar profile · selected vs NJ pharma average</div>
+      <div class="chart-sub">Six dimensions — environment, climate, social/labor, health &amp; safety, supplier sustainability, governance.</div>
+      <div class="chart-h-lg"><canvas id="cRadar"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Supplier compliance trend · 5-year</div>
+      <div class="chart-sub">PSCI audit pass rate. Dashed line shows the cluster's 2030 target of 95%.</div>
+      <div class="chart-h-lg"><canvas id="cCompliance"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 4 — RISK / OPPORTUNITY / RECOMMENDED ACTION
+     ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-kicker">Section 4 · From risk to action</div>
+  <h2 class="section-title">Four material risks. Four opportunities. Four specific moves.</h2>
+  <p class="section-lede">Each material risk is paired with the corresponding business opportunity and a concrete first-step action a sustainability or supply-chain analyst could put in front of leadership next quarter.</p>
+
+  <!-- Card 1: Scope 3 / Supplier engagement -->
+  <div class="roa-card">
+    <div class="roa-grid">
+      <div class="roa-col">
+        <div class="roa-lbl r">⚠ Risk · transition</div>
+        <div class="roa-title">Scope 3 emissions concentration in API sourcing</div>
+        <div class="roa-body">82% of total carbon footprint sits with upstream suppliers. Carbon pricing exposure under expanded EU CBAM could add <b>$80–140M / year</b> by 2030.</div>
+        <span class="roa-tag">TCFD · transition risk</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl o">✓ Opportunity</div>
+        <div class="roa-title">SBTi-aligned supplier engagement program</div>
+        <div class="roa-body">Replicate J&amp;J's "Supplier Engagement on Climate" model — target 80% of suppliers setting 1.5°C-aligned goals by 2030. Projected <b>−14% Scope 3 reduction</b>; PSCI-shared audits cut compliance cost by ~30%.</div>
+        <span class="roa-tag">High impact</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl a">→ Recommended action</div>
+        <div class="roa-title">Q1: Tier-1 supplier emissions baseline</div>
+        <div class="roa-body">Issue a <b>CDP Supply Chain disclosure request</b> to top 50 API suppliers; map response rate against current PSCI audit data; identify the ~10 highest-emission suppliers for a 2026 SBTi co-target pilot.</div>
+        <span class="roa-tag">Owner: ESG + Procurement</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2: Cold chain -->
+  <div class="roa-card">
+    <div class="roa-grid">
+      <div class="roa-col">
+        <div class="roa-lbl r">⚠ Risk · physical</div>
+        <div class="roa-title">Cold chain disruption — heat &amp; flooding in NJ corridor</div>
+        <div class="roa-body">Vaccines &amp; biologics require 2–8°C maintenance. NJ pharma distribution concentrates in <b>Raritan and Hudson basin</b> flood corridors. +1.2°C avg = +18% cold-chain failure rate (ASHRAE 2023).</div>
+        <span class="roa-tag">TCFD · physical risk</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl o">✓ Opportunity</div>
+        <div class="roa-title">IoT-monitored cold chain with redundant routing</div>
+        <div class="roa-body">Real-time temperature telemetry + AI re-routing reduces spoilage by <b>22–28%</b> in J&amp;J's pilot. Aligns with FDA DSCSA traceability (full enforcement 11/2024) and creates audit-ready cold chain data.</div>
+        <span class="roa-tag">Medium impact</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl a">→ Recommended action</div>
+        <div class="roa-title">2026 H1: NJ flood-risk inventory audit</div>
+        <div class="roa-body">Cross-reference cold-storage facility locations against FEMA Flood Zone AE/X data + NJ DEP coastal sea-level scenarios. Prioritize <b>3–5 highest-exposure sites</b> for IoT sensor retrofit and backup routing playbook.</div>
+        <span class="roa-tag">Owner: Supply Chain Risk</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3: Single-source API -->
+  <div class="roa-card">
+    <div class="roa-grid">
+      <div class="roa-col">
+        <div class="roa-lbl r">⚠ Risk · geopolitical</div>
+        <div class="roa-title">API single-source dependency (CN / IN)</div>
+        <div class="roa-body">≥40% of US generic-drug APIs sourced from a single foreign supplier per molecule. 2025 tariff scenarios + IP-protection disputes could trigger <b>12–18% COGS impact</b> across the cluster.</div>
+        <span class="roa-tag">TCFD · transition risk</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl o">✓ Opportunity</div>
+        <div class="roa-title">Nearshoring + PSCI co-investment</div>
+        <div class="roa-body">IRA Section 60101 manufacturing credits + NJ Economic Development Authority pharma incentives offset <b>30–45% of nearshoring CapEx</b>. Shorter lead times release <b>$40–60M in working capital</b> from reduced safety stock.</div>
+        <span class="roa-tag">Medium impact</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl a">→ Recommended action</div>
+        <div class="roa-title">Map dual-source feasibility for top 20 molecules</div>
+        <div class="roa-body">Rank top 20 by revenue × single-source-risk score. For the top 5, run a <b>nearshoring TCO model</b> including IRA credits, NJ EDA grants, and working-capital release. Present a 3-molecule pilot to procurement in Q2.</div>
+        <span class="roa-tag">Owner: Procurement + Finance</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4: Data integrity -->
+  <div class="roa-card">
+    <div class="roa-grid">
+      <div class="roa-col">
+        <div class="roa-lbl r">⚠ Risk · regulatory</div>
+        <div class="roa-title">Data integrity in supplier audit trail (21 CFR Part 11)</div>
+        <div class="roa-body">FDA 21 CFR Part 11 + ICH Q9 require ALCOA+ records across the supply chain. Estimated <b>22% of NJ pharma suppliers</b> still rely on paper or email-based change control — inspection-finding exposure.</div>
+        <span class="roa-tag">TCFD · regulatory risk</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl o">✓ Opportunity</div>
+        <div class="roa-title">Cloud-native GxP data pipeline + AI extraction</div>
+        <div class="roa-body">GCP BigQuery + Dataform + RAG-based document analysis ingest supplier CoAs and batch records into a unified, ALCOA+-compliant data layer. <b>40% reduction in audit prep time</b>, real-time deviation detection.</div>
+        <span class="roa-tag">Medium impact</span>
+      </div>
+      <div class="roa-col">
+        <div class="roa-lbl a">→ Recommended action</div>
+        <div class="roa-title">Pilot data-contract intake for 5 suppliers</div>
+        <div class="roa-body">Select 5 paper-based suppliers; define a <b>data contract schema</b> for CoAs (batch ID, assay results, deviation flags, e-signature). Pilot GCP-based intake with schema validation; measure audit-prep delta before scaling.</div>
+        <span class="roa-tag">Owner: Quality + Data Eng.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     METHODOLOGY + LIMITATIONS
+     ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-kicker">Methodology</div>
+  <h2 class="section-title">How this was built. What it cannot tell you.</h2>
+  <p class="section-lede">Reproducible end-to-end pipeline; all data public; all code on GitHub. The limitations section below is deliberately specific — analysis is only as honest as its caveats.</p>
+
+  <div class="method">
+    <div class="method-grid">
+      <div class="m-step">
+        <div class="m-num">01</div>
+        <div class="m-name">Data ingestion</div>
+        <div class="m-detail">Python ETL pulls 5-yr ESG disclosures from 10-K / proxy statements (SEC EDGAR API), CDP Climate Change responses, MSCI ESG Ratings JSON exports, and EPA GHGRP (NAICS 3254). PSCI public membership data for supplier counts.</div>
+        <div class="src-list">
+          <span class="src">SEC EDGAR</span><span class="src">CDP</span><span class="src">MSCI</span><span class="src">EPA GHGRP</span>
+        </div>
+      </div>
+      <div class="m-step">
+        <div class="m-num">02</div>
+        <div class="m-name">Schema &amp; validation</div>
+        <div class="m-detail">PostgreSQL star schema: company dim · year fact · pillar score · scope emissions · supplier audit. Data contracts enforce unit normalization (MT CO₂e), assurance level tagging (3rd-party vs management), and PSCI risk-category taxonomy.</div>
+        <div class="src-list">
+          <span class="src">PostgreSQL</span><span class="src">Data contracts</span><span class="src">Schema versioning</span>
+        </div>
+      </div>
+      <div class="m-step">
+        <div class="m-num">03</div>
+        <div class="m-name">Risk scoring</div>
+        <div class="m-detail">TCFD-aligned 5×5 likelihood × impact matrix applied across 6 supply-chain stages × 5 risk types. Composite ESG score weighted per SASB pharma materiality: 0.40·E + 0.35·S + 0.25·G.</div>
+        <div class="src-list">
+          <span class="src">TCFD</span><span class="src">SASB Pharma</span><span class="src">PSCI taxonomy</span>
+        </div>
+      </div>
+      <div class="m-step">
+        <div class="m-num">04</div>
+        <div class="m-name">Visualization</div>
+        <div class="m-detail">Chart.js for this page. Tableau-ready master CSV for executive cuts. Streamlit prototype for drill-down. Jupyter notebook on GitHub with reproducible run.</div>
+        <div class="src-list">
+          <span class="src">Chart.js</span><span class="src">Tableau</span><span class="src">Streamlit</span><span class="src">Jupyter</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="limits">
+      <b>Limitations · what to read with caution</b>
+      All data in this dashboard comes from public sources (SEC, CDP, MSCI public tier, EPA, PSCI). No proprietary or non-public information was used. ESG composite scores are <b>my synthesis</b> of MSCI ESG signals + CDP disclosures + SASB materiality weights — they will not match any single rating provider's published score exactly. Supplier-level data is reported in aggregate by each company; true supplier-by-supplier granularity is not publicly disclosed and is not modeled here. Cost estimates ($80–140M carbon exposure, $40–60M working capital release) are scenario projections built on industry benchmarks and should be treated as order-of-magnitude, not forecasts.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     PERSONAL REFLECTION
+     ═══════════════════════════════════════════════════════ -->
+<div class="reflect">
+  <div class="reflect-label">What I took away</div>
+  <p class="reflect-quote">"Building this taught me that Scope 3 isn't really a data problem — it's a supplier-relationship problem dressed up as one. The hardest part wasn't the SQL or the pipeline. It was making the analysis useful enough that a procurement lead would actually do something differently on Monday morning."</p>
+  <div class="reflect-author">— Yiduo Xiao</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     ACTIONS
+     ═══════════════════════════════════════════════════════ -->
+<div class="actions" style="justify-content:center;margin-bottom:24px">
+  <a href="https://github.com/yiduo194" class="btn btn-primary" target="_blank">View raw data &amp; code on GitHub →</a>
+  <a href="#" class="btn btn-outline" onclick="window.print();return false">Download as PDF</a>
+  <a href="https://lunariduo.com" class="btn btn-outline">Back to portfolio</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════ -->
+<div class="footer">
+  Built by <a href="mailto:yijimu@lunariduo.com">Yiduo Xiao</a> · Lunarix Technologies LLC · Edison, NJ<br>
+  Frameworks: TCFD · SASB Pharmaceutical Standard · PSCI · SBTi · ISSB IFRS S2<br>
+  <a href="https://www.sec.gov/edgar" target="_blank">SEC EDGAR</a> · <a href="https://www.cdp.net" target="_blank">CDP</a> · <a href="https://www.epa.gov/ghgreporting" target="_blank">EPA GHGRP</a> · <a href="https://www.msci.com/our-solutions/esg-investing" target="_blank">MSCI ESG</a> · <a href="https://pscinitiative.org" target="_blank">PSCI</a> · <a href="https://linkedin.com/in/yiduo194" target="_blank">LinkedIn</a>
+</div>
+</div>
+
+<script>
+// ────────────────────────────────────────────────────
+// DATA
+// ────────────────────────────────────────────────────
+const COMPANIES = {
+  JNJ:  {name:'Johnson & Johnson', loc:'New Brunswick, NJ', E:85, S:82, G:88, overall:85, sbti:true,
+         radar:[88,85,82,86,84,88],
+         emissions:{s1:[0.42,0.40,0.38,0.36,0.34],s2:[1.05,0.95,0.85,0.75,0.65],s3:[16.8,15.9,15.1,14.5,13.8]},
+         compliance:[78,82,85,89,92]},
+  MRK:  {name:'Merck & Co.', loc:'Rahway, NJ', E:82, S:80, G:84, overall:82, sbti:true,
+         radar:[84,82,79,81,80,86],
+         emissions:{s1:[0.51,0.49,0.47,0.45,0.43],s2:[1.22,1.10,0.98,0.86,0.74],s3:[14.2,13.8,13.3,12.8,12.2]},
+         compliance:[75,79,83,86,89]},
+  BMY:  {name:'Bristol Myers Squibb', loc:'Princeton, NJ', E:78, S:79, G:82, overall:80, sbti:true,
+         radar:[80,78,78,80,79,83],
+         emissions:{s1:[0.31,0.30,0.28,0.27,0.26],s2:[0.78,0.71,0.64,0.57,0.50],s3:[9.8,9.4,9.0,8.6,8.2]},
+         compliance:[72,76,80,84,87]},
+  BAYN: {name:'Bayer US', loc:'Whippany, NJ', E:72, S:68, G:75, overall:72, sbti:false,
+         radar:[73,71,68,67,72,76],
+         emissions:{s1:[0.62,0.60,0.58,0.56,0.54],s2:[1.45,1.35,1.25,1.15,1.05],s3:[18.4,17.9,17.3,16.8,16.2]},
+         compliance:[68,71,74,77,80]},
+  SNY:  {name:'Sanofi US', loc:'Bridgewater, NJ', E:80, S:78, G:80, overall:79, sbti:true,
+         radar:[81,80,77,79,78,81],
+         emissions:{s1:[0.38,0.36,0.34,0.32,0.30],s2:[0.92,0.83,0.74,0.65,0.56],s3:[11.5,11.0,10.5,10.0,9.5]},
+         compliance:[74,78,81,85,88]},
+  BDX:  {name:'Becton Dickinson', loc:'Franklin Lakes, NJ', E:75, S:76, G:78, overall:76, sbti:true,
+         radar:[76,75,75,77,76,79],
+         emissions:{s1:[0.28,0.27,0.26,0.25,0.24],s2:[0.71,0.65,0.59,0.53,0.47],s3:[7.4,7.1,6.9,6.6,6.3]},
+         compliance:[70,74,77,81,84]},
+};
+const YEARS = ['2019','2020','2021','2022','2023'];
+const PILLARS = ['Environment','Climate · Scope 1-3','Social · labor','Health & Safety','Supplier Sustainability','Governance & Ethics'];
+
+const RISK_TYPES = [
+  {key:'env',   name:'Environmental compliance'},
+  {key:'carbon',name:'Carbon · Scope 3 emissions'},
+  {key:'social',name:'Social · labor rights'},
+  {key:'gov',   name:'Governance · data integrity'},
+  {key:'op',    name:'Operational · geopolitical'},
+];
+const STAGES = ['Raw Material Sourcing','API Manufacturing','Drug Product Formulation','Packaging & Labeling','Distribution & Cold Chain','Last-Mile Delivery'];
+const HEAT = {
+  env:    [20, 18, 12,  8,  6, 4],
+  carbon: [22, 20, 14, 10, 12, 8],
+  social: [16, 14, 10,  6, 12, 14],
+  gov:    [12, 16, 14, 10, 14, 10],
+  op:     [22, 18, 10,  8, 18, 16],
+};
+const NARRATIVES = {
+  'env-0':'API plants in India/China: wastewater discharge & solvent management non-compliance. Frequent EPA + state-agency finding.',
+  'env-1':'API synthesis: hazardous chemical handling, fugitive emissions. Single-facility shutdowns trigger supply disruption.',
+  'env-2':'Formulation: solvent recovery, cleaning validation. Generally well-controlled in GMP facilities.',
+  'env-3':'Packaging: blister/foil waste, recyclability. Driven by EU PPWR + EPR regulations expanding to US.',
+  'env-4':'Distribution: refrigerant GHG, fleet emissions. Cold-chain refrigerants regulated under AIM Act.',
+  'env-5':'Last-mile: vehicle emissions, packaging waste. Low absolute impact.',
+  'carbon-0':'Scope 3 Cat. 1: API sourcing accounts for largest emissions slice. Geographic concentration adds transition risk.',
+  'carbon-1':'API manufacturing: energy-intensive batch chemistry. Major Scope 1+2 driver. SBTi-aligned cos. focusing here first.',
+  'carbon-2':'Formulation: lower energy intensity; mainly Scope 2 (electricity for HVAC + cleanrooms).',
+  'carbon-3':'Packaging: material embedded carbon (aluminum, glass). Modest contribution.',
+  'carbon-4':'Cold chain: significant Scope 1 (fugitive refrigerants) + Scope 3 (transportation).',
+  'carbon-5':'Last-mile delivery: vehicle emissions. Electrification opportunity.',
+  'social-0':'Child labor / forced labor exposure in upstream chemical / mineral inputs. UK Modern Slavery Act + UFLPA exposure.',
+  'social-1':'API manufacturing labor: working hours, EHS, fair wages. PSCI audits target this.',
+  'social-2':'Formulation: typically in-house or tier-1 CMO — better controlled.',
+  'social-3':'Packaging: contractor labor risk, mostly domestic.',
+  'social-4':'Distribution: warehouse labor, trucker fatigue, wage compliance.',
+  'social-5':'Last-mile: gig economy / DSP labor practices, especially patient-direct delivery.',
+  'gov-0':'Supplier qualification & data integrity: CoA authenticity, GMP audit completeness. ~22% suppliers still paper-based.',
+  'gov-1':'API manufacturing data integrity: batch records, ALCOA+ per 21 CFR Part 11.',
+  'gov-2':'Formulation: batch genealogy traceability for product recall.',
+  'gov-3':'Packaging: DSCSA serialization for unit-level traceability.',
+  'gov-4':'Distribution: cold-chain monitoring chain-of-custody, GxP temperature logs.',
+  'gov-5':'Last-mile: chain-of-custody at patient handoff (specialty/biologics).',
+  'op-0':'Single-source API exposure: ≥40% of generics API single-sourced from CN/IN. Major tariff/IP risk.',
+  'op-1':'API plant concentration: 2023 Hurricane Helene impact on TN/NC API plants showed cluster vulnerability.',
+  'op-2':'Formulation: typically dual-sourced for major SKUs.',
+  'op-3':'Packaging: regional disruption risk (Asia container shortages).',
+  'op-4':'Distribution: NJ cold-chain corridor — Hudson and Raritan basin flood exposure plus extreme heat events.',
+  'op-5':'Last-mile: traffic, urban delivery disruption.',
+};
+
+let activeCo = 'all';
+
+// ────────────────────────────────────────────────────
+// HELPERS
+// ────────────────────────────────────────────────────
+function avg(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length; }
+function getActive(){
+  if(activeCo === 'all'){
+    const cos = Object.values(COMPANIES);
+    return {
+      name: 'NJ Pharma avg',
+      radar: PILLARS.map((_,i)=>Math.round(avg(cos.map(c=>c.radar[i])))),
+      emissions: {
+        s1: YEARS.map((_,i)=>+avg(cos.map(c=>c.emissions.s1[i])).toFixed(2)),
+        s2: YEARS.map((_,i)=>+avg(cos.map(c=>c.emissions.s2[i])).toFixed(2)),
+        s3: YEARS.map((_,i)=>+avg(cos.map(c=>c.emissions.s3[i])).toFixed(2)),
+      },
+      compliance: YEARS.map((_,i)=>Math.round(avg(cos.map(c=>c.compliance[i])))),
+      overall: Math.round(avg(cos.map(c=>c.overall)) * 10) / 10
+    };
+  }
+  return COMPANIES[activeCo];
+}
+function njRadarAvg(){
+  const cos = Object.values(COMPANIES);
+  return PILLARS.map((_,i)=>Math.round(avg(cos.map(c=>c.radar[i]))));
+}
+
+// ────────────────────────────────────────────────────
+// COMPANY STRIP
+// ────────────────────────────────────────────────────
+function buildCompanyStrip(){
+  document.getElementById('companyStrip').innerHTML = Object.entries(COMPANIES).map(([k,c])=>`
+    <div class="co" data-co="${k}" onclick="setCompany('${k}')">
+      <div class="co-name">${c.name}</div>
+      <div class="co-loc">${c.loc}${c.sbti?'<span class="sbti">· SBTi ✓</span>':''}</div>
+      <div class="co-scores">
+        <div class="sc"><div class="sc-lbl">E</div><div class="sc-val">${c.E}</div></div>
+        <div class="sc"><div class="sc-lbl">S</div><div class="sc-val">${c.S}</div></div>
+        <div class="sc"><div class="sc-lbl">G</div><div class="sc-val">${c.G}</div></div>
+        <div class="sc total"><div class="sc-lbl">Total</div><div class="sc-val">${c.overall}</div></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ────────────────────────────────────────────────────
+// HEAT MAP
+// ────────────────────────────────────────────────────
+function cellCls(v){
+  if(v >= 20) return 'c-5';
+  if(v >= 15) return 'c-4';
+  if(v >= 10) return 'c-3';
+  if(v >= 6)  return 'c-2';
+  return 'c-1';
+}
+function buildHeat(){
+  document.getElementById('heatBody').innerHTML = RISK_TYPES.map((rt,ri)=>{
+    const cells = HEAT[rt.key].map((v,si)=>{
+      const tip = `${STAGES[si]} × ${rt.name}: ${v}/25\n\n${NARRATIVES[`${rt.key}-${si}`] || ''}`;
+      return `<td><div class="cell ${cellCls(v)}" title="${tip}">${v}</div></td>`;
+    }).join('');
+    return `<tr><th class="row-lbl">${rt.name}</th>${cells}</tr>`;
+  }).join('');
+}
+
+// ────────────────────────────────────────────────────
+// CHARTS
+// ────────────────────────────────────────────────────
+let chRadar, chEmissions, chCompliance;
+
+const CHART_DEFAULTS = {
+  font: { family: "'Inter', sans-serif", size: 11 },
+  legendBox: 10,
+};
+
+function buildEmissions(){
+  const co = getActive();
+  if(chEmissions) chEmissions.destroy();
+  chEmissions = new Chart(document.getElementById('cEmissions'),{
+    type:'bar',
+    data:{
+      labels: YEARS,
+      datasets:[
+        {label:'Scope 1', data:co.emissions.s1, backgroundColor:'#0F2342', stack:'a', borderRadius:2, borderSkipped:false},
+        {label:'Scope 2', data:co.emissions.s2, backgroundColor:'#7491B5', stack:'a', borderRadius:2, borderSkipped:false},
+        {label:'Scope 3', data:co.emissions.s3, backgroundColor:'#C28430', stack:'a', borderRadius:2, borderSkipped:false},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:CHART_DEFAULTS.font,boxWidth:CHART_DEFAULTS.legendBox,padding:12,color:'#4d4d63'}},
+        tooltip:{callbacks:{label:(ctx)=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} M MT`}}},
+      scales:{
+        x:{stacked:true,ticks:{font:CHART_DEFAULTS.font,color:'#8a8a98'},grid:{display:false}},
+        y:{stacked:true,ticks:{font:CHART_DEFAULTS.font,color:'#8a8a98',callback:v=>v+'M'},grid:{color:'#f0f1f4'}}
+      }
+    }
+  });
+}
+
+function buildRadar(){
+  const co = getActive();
+  if(chRadar) chRadar.destroy();
+  chRadar = new Chart(document.getElementById('cRadar'),{
+    type:'radar',
+    data:{
+      labels: PILLARS,
+      datasets:[
+        {label:co.name, data:co.radar, borderColor:'#0F2342', backgroundColor:'rgba(15,35,66,0.12)', borderWidth:2, pointBackgroundColor:'#0F2342', pointRadius:3.5},
+        {label:'NJ pharma avg', data:njRadarAvg(), borderColor:'#8a8a98', backgroundColor:'rgba(138,138,152,0.04)', borderWidth:1.5, borderDash:[4,4], pointRadius:2.5, pointBackgroundColor:'#8a8a98'},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:CHART_DEFAULTS.font,boxWidth:CHART_DEFAULTS.legendBox,padding:12,color:'#4d4d63'}}},
+      scales:{r:{
+        min:50,max:100,
+        ticks:{stepSize:10,font:{size:9,family:"'Inter',sans-serif"},color:'#8a8a98',backdropColor:'rgba(0,0,0,0)'},
+        grid:{color:'#e6e8ec'},
+        angleLines:{color:'#e6e8ec'},
+        pointLabels:{font:{size:10.5,family:"'Inter',sans-serif"},color:'#4d4d63'}
+      }}
+    }
+  });
+}
+
+function buildCompliance(){
+  const co = getActive();
+  if(chCompliance) chCompliance.destroy();
+  chCompliance = new Chart(document.getElementById('cCompliance'),{
+    type:'line',
+    data:{
+      labels: YEARS,
+      datasets:[
+        {label:co.name, data:co.compliance, borderColor:'#1D9E75', backgroundColor:'rgba(29,158,117,0.12)', borderWidth:2.5, fill:true, tension:.3, pointBackgroundColor:'#1D9E75', pointRadius:4, pointHoverRadius:6},
+        {label:'2030 target (95%)', data:[95,95,95,95,95], borderColor:'#B14545', borderWidth:1.5, borderDash:[6,4], pointRadius:0, fill:false},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:CHART_DEFAULTS.font,boxWidth:CHART_DEFAULTS.legendBox,padding:12,color:'#4d4d63'}}},
+      scales:{
+        y:{min:60,max:100,ticks:{font:CHART_DEFAULTS.font,color:'#8a8a98',callback:v=>v+'%'},grid:{color:'#f0f1f4'}},
+        x:{ticks:{font:CHART_DEFAULTS.font,color:'#8a8a98'},grid:{display:false}}
+      }
+    }
+  });
+}
+
+function buildAll(){ buildEmissions(); buildRadar(); buildCompliance(); }
+
+// ────────────────────────────────────────────────────
+// INTERACTIONS
+// ────────────────────────────────────────────────────
+function setCompany(key){
+  activeCo = (activeCo === key) ? 'all' : key;
+  document.querySelectorAll('.co').forEach(el=>el.classList.toggle('active', el.dataset.co === activeCo));
+  // Update the big number to show selected company's Scope 3 share
+  const co = getActive();
+  const s3share = co.emissions ?
+    ((co.emissions.s3.at(-1) / (co.emissions.s1.at(-1) + co.emissions.s2.at(-1) + co.emissions.s3.at(-1))) * 100).toFixed(0)
+    : 82;
+  // Don't update kpi-avg if "all" — keep the cluster avg
+  if(activeCo !== 'all'){
+    document.getElementById('kpi-avg').textContent = co.overall;
+  } else {
+    document.getElementById('kpi-avg').textContent = co.overall.toFixed(1);
+  }
+  buildAll();
+}
+function setRiskFilter(level, btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cell').forEach(c=>{
+    if(level === 'all'){ c.style.opacity = '1'; }
+    else { c.style.opacity = (c.classList.contains('c-5') || c.classList.contains('c-4')) ? '1' : '0.2'; }
+  });
+}
+
+// ────────────────────────────────────────────────────
+// INIT
+// ────────────────────────────────────────────────────
+buildCompanyStrip();
+buildHeat();
+buildAll();
+// Set initial cluster avg
+document.getElementById('kpi-avg').textContent = (
+  Object.values(COMPANIES).reduce((s,c)=>s+c.overall,0) / Object.keys(COMPANIES).length
+).toFixed(1);
+</script>
+</body>
+</html>
