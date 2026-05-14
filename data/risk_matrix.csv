@@ -1,0 +1,31 @@
+stage,risk_type,likelihood,impact,inherent_score,narrative
+Raw Material Sourcing,Environmental,4,5,20,API plants in India/China: wastewater discharge & solvent management non-compliance. Frequent EPA + state-agency findings.
+Raw Material Sourcing,Carbon,5,5,25,Scope 3 Cat. 1: API sourcing accounts for largest emissions slice. Geographic concentration adds transition risk.
+Raw Material Sourcing,Social,4,4,16,Child labor / forced labor exposure in upstream chemical / mineral inputs. UK Modern Slavery Act + UFLPA exposure.
+Raw Material Sourcing,Governance,3,4,12,Supplier qualification & data integrity: CoA authenticity, GMP audit completeness. ~22% suppliers still paper-based.
+Raw Material Sourcing,Operational,5,5,25,Single-source API exposure: ≥40% of generics API single-sourced from CN/IN. Major tariff/IP risk.
+API Manufacturing,Environmental,4,5,20,API synthesis: hazardous chemical handling, fugitive emissions. Single-facility shutdowns trigger supply disruption.
+API Manufacturing,Carbon,4,5,20,API manufacturing: energy-intensive batch chemistry. Major Scope 1+2 driver. SBTi-aligned cos. focusing here first.
+API Manufacturing,Social,4,4,16,API manufacturing labor: working hours EHS fair wages. PSCI audits target this.
+API Manufacturing,Governance,4,4,16,API manufacturing data integrity: batch records ALCOA+ per 21 CFR Part 11.
+API Manufacturing,Operational,4,5,20,API plant concentration: 2023 Hurricane Helene impact on TN/NC API plants showed cluster vulnerability.
+Drug Product Formulation,Environmental,3,4,12,Formulation: solvent recovery cleaning validation. Generally well-controlled in GMP facilities.
+Drug Product Formulation,Carbon,3,4,12,Formulation: lower energy intensity mainly Scope 2 electricity for HVAC + cleanrooms.
+Drug Product Formulation,Social,2,3,6,Formulation: typically in-house or tier-1 CMO — better controlled.
+Drug Product Formulation,Governance,3,4,12,Formulation: batch genealogy traceability for product recall.
+Drug Product Formulation,Operational,2,4,8,Formulation: typically dual-sourced for major SKUs.
+Packaging & Labeling,Environmental,2,3,6,Packaging: blister/foil waste recyclability. Driven by EU PPWR + EPR regulations expanding to US.
+Packaging & Labeling,Carbon,3,3,9,Packaging: material embedded carbon aluminum glass. Modest contribution.
+Packaging & Labeling,Social,2,3,6,Packaging: contractor labor risk mostly domestic.
+Packaging & Labeling,Governance,3,3,9,Packaging: DSCSA serialization for unit-level traceability.
+Packaging & Labeling,Operational,2,4,8,Packaging: regional disruption risk Asia container shortages.
+Distribution & Cold Chain,Environmental,2,3,6,Distribution: refrigerant GHG fleet emissions. Cold-chain refrigerants regulated under AIM Act.
+Distribution & Cold Chain,Carbon,3,4,12,Cold chain: significant Scope 1 fugitive refrigerants + Scope 3 transportation.
+Distribution & Cold Chain,Social,3,4,12,Distribution: warehouse labor trucker fatigue wage compliance.
+Distribution & Cold Chain,Governance,3,4,12,Distribution: cold-chain monitoring chain-of-custody GxP temperature logs.
+Distribution & Cold Chain,Operational,4,4,16,Distribution: NJ cold-chain corridor — Hudson and Raritan basin flood exposure plus extreme heat events.
+Last-Mile Delivery,Environmental,2,2,4,Last-mile: vehicle emissions packaging waste. Low absolute impact.
+Last-Mile Delivery,Carbon,2,4,8,Last-mile delivery: vehicle emissions. Electrification opportunity.
+Last-Mile Delivery,Social,3,4,12,Last-mile: gig economy / DSP labor practices especially patient-direct delivery.
+Last-Mile Delivery,Governance,2,4,8,Last-mile: chain-of-custody at patient handoff specialty/biologics.
+Last-Mile Delivery,Operational,3,4,12,Last-mile: traffic urban delivery disruption.

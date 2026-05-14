@@ -1,0 +1,7 @@
+ticker,name,hq_city,hq_state,naics_code,sbti_validated,revenue_usd_bn,employees,public_listed
+JNJ,Johnson & Johnson,New Brunswick,NJ,3254,1,85.2,131900,1
+MRK,Merck & Co.,Rahway,NJ,3254,1,60.1,68000,1
+BMY,Bristol Myers Squibb,Princeton,NJ,3254,1,45.0,34300,1
+BAYN,Bayer US,Whippany,NJ,3254,0,52.5,99700,1
+SNY,Sanofi US,Bridgewater,NJ,3254,1,44.0,91000,1
+BDX,Becton Dickinson,Franklin Lakes,NJ,3391,1,19.4,75000,1
